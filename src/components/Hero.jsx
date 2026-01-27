@@ -246,12 +246,16 @@ const Hero = () => {
       {/* Footer */}
       <footer className="border-t border-border-default">
         <div className="max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-text-muted">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent-coral/20 to-accent-cyan/20 border border-border-default flex items-center justify-center">
-                <Icon name="code" className="w-4 h-4 text-accent-coral" />
-              </div>
-              <span>Cheat Sheets</span>
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-md text-text-muted">
+            <div className="flex items-center ">
+              <img
+                src="/tn.png"
+                alt="Tool Notes"
+                className="w-18 h-18 rounded-xl object-cover"
+              />
+              <span className="bg-white bg-clip-text text-transparent text-3xl font-bold text-center tracking-tigh">
+                Tool Notes
+              </span>
             </div>
             <p>Built for developers who value their time</p>
           </div>

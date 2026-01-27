@@ -31,17 +31,16 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-bg-primary/80 backdrop-blur-xl border-b border-border-default print:hidden">
       <div className="max-w-[1800px] mx-auto px-4 md:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20 ">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-3 group">
-            <div className="relative">
-              <div className="absolute inset-0 bg-accent-coral/20 blur-lg rounded-full opacity-0 group-hover:opacity-100 transition-opacity" />
-              <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-accent-coral/20 to-accent-cyan/20 border border-border-default flex items-center justify-center">
-                <Icon name="code" className="w-5 h-5 text-accent-coral" />
-              </div>
-            </div>
-            <span className="font-semibold text-text-primary hidden sm:block">
-              Cheat Sheets
+          <Link to="/" className="flex justify-start items-center group">
+            <img
+              src="/tn.png"
+              alt="Tool Notes"
+              className="w-18 h-18 rounded-xl object-cover"
+            />
+            <span className="text-2xl md:text-3xl font-bold text-text-primary print:text-xl tracking-tight">
+              Tool Notes
             </span>
           </Link>
 

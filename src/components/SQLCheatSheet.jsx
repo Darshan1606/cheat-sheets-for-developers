@@ -271,7 +271,7 @@ const SQLCheatSheet = () => {
   };
 
   return (
-    <div className="min-h-screen bg-bg-primary px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 pt-24 md:pt-28 print:p-4 print:pt-4">
+    <div className="min-h-screen bg-bg-primary px-4 md:px-6 lg:px-8 pb-4 md:pb-6 lg:pb-8 pt-28 md:pt-32 print:p-4 print:pt-4">
       {/* Header */}
       <header className="max-w-[1800px] mx-auto mb-8 print:mb-4">
         <div className="flex items-center justify-between flex-wrap gap-4">
