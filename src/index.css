@@ -1,0 +1,107 @@
+@import "tailwindcss";
+
+@theme {
+  /* Background colors */
+  --color-bg-primary: #050810;
+  --color-bg-secondary: #0a0f1a;
+  --color-bg-tertiary: #111827;
+  --color-bg-elevated: #1a2332;
+
+  /* Text colors */
+  --color-text-primary: #f0f4ff;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+
+  /* Border colors */
+  --color-border-default: rgba(148, 163, 184, 0.15);
+  --color-border-subtle: rgba(148, 163, 184, 0.08);
+
+  /* Accent colors */
+  --color-accent-coral: #ff4d4d;
+  --color-accent-coral-subtle: rgba(255, 77, 77, 0.1);
+  --color-accent-cyan: #00e5cc;
+  --color-accent-cyan-subtle: rgba(0, 229, 204, 0.1);
+
+  /* Category colors */
+  --color-purple: #a78bfa;
+  --color-purple-subtle: rgba(167, 139, 250, 0.1);
+  --color-blue: #60a5fa;
+  --color-blue-subtle: rgba(96, 165, 250, 0.1);
+  --color-green: #34d399;
+  --color-green-subtle: rgba(52, 211, 153, 0.1);
+  --color-orange: #fb923c;
+  --color-orange-subtle: rgba(251, 146, 60, 0.1);
+  --color-cyan: #22d3ee;
+  --color-cyan-subtle: rgba(34, 211, 238, 0.1);
+  --color-yellow: #fbbf24;
+  --color-yellow-subtle: rgba(251, 191, 36, 0.1);
+  --color-red: #f87171;
+  --color-red-subtle: rgba(248, 113, 113, 0.1);
+  --color-gray: #94a3b8;
+  --color-gray-subtle: rgba(148, 163, 184, 0.1);
+
+  /* Font families */
+  --font-sans: "Inter", "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "SF Mono", "Fira Code", "Consolas", monospace;
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Code block styling */
+code {
+  font-family: var(--font-mono);
+}
+
+/* Selection */
+::selection {
+  background-color: rgba(0, 229, 204, 0.3);
+  color: var(--color-text-primary);
+}
+
+/* Print styles */
+@media print {
+  @page {
+    size: A4 landscape;
+    margin: 8mm;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    background: #050810 !important;
+  }
+
+  * {
+    color-adjust: exact !important;
+  }
+}
