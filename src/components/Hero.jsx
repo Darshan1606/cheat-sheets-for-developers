@@ -1,5 +1,197 @@
 import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
+import { useState, useEffect, useMemo } from "react";
+
+// Generate stars with varying properties
+const generateStars = (count) => {
+  const stars = [];
+  for (let i = 0; i < count; i++) {
+    const size = Math.random();
+    stars.push({
+      id: i,
+      left: Math.random() * 100,
+      top: Math.random() * 100,
+      size: size < 0.7 ? 1 : size < 0.9 ? 2 : 3,
+      opacity: Math.random() * 0.6 + 0.4,
+      twinkle: Math.random() > 0.6,
+      delay: Math.random() * 4,
+    });
+  }
+  return stars;
+};
+
+const SpaceBackground = () => {
+  const stars = useMemo(() => generateStars(300), []);
+
+  return (
+    <div className="fixed inset-0 overflow-hidden pointer-events-none" style={{ zIndex: 0 }}>
+      {/* Deep space base */}
+      <div className="absolute inset-0 bg-[#020408]" />
+
+      {/* Subtle space gradient */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#0a0a20]/30 to-[#050510]/50" />
+
+      {/* Distant nebula glow - very subtle */}
+      <div className="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] bg-purple/[0.03] rounded-full blur-[150px]" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[50%] h-[50%] bg-accent-cyan/[0.03] rounded-full blur-[150px]" />
+      <div className="absolute top-[30%] right-[-5%] w-[40%] h-[40%] bg-blue/[0.02] rounded-full blur-[120px]" />
+
+      {/* Star field */}
+      {stars.map((star) => (
+        <div
+          key={star.id}
+          className={`absolute rounded-full bg-white ${star.twinkle ? 'animate-[starTwinkle_3s_ease-in-out_infinite]' : ''}`}
+          style={{
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: `${star.size}px`,
+            height: `${star.size}px`,
+            opacity: star.opacity,
+            animationDelay: `${star.delay}s`,
+            boxShadow: star.size > 1 ? `0 0 ${star.size * 2}px rgba(255,255,255,0.3)` : 'none',
+          }}
+        />
+      ))}
+
+      {/* Shooting stars */}
+      <div className="absolute top-[15%] left-[10%] animate-[shootingStar_8s_ease-out_infinite]">
+        <div className="w-[100px] h-[1px] bg-gradient-to-r from-transparent via-white to-white rounded-full"
+          style={{ transform: 'rotate(35deg)', boxShadow: '0 0 6px 1px rgba(255,255,255,0.4)' }}
+        />
+      </div>
+      <div className="absolute top-[40%] right-[20%] animate-[shootingStar_12s_ease-out_infinite_4s]">
+        <div className="w-[80px] h-[1px] bg-gradient-to-r from-transparent via-white/80 to-white/80 rounded-full"
+          style={{ transform: 'rotate(40deg)', boxShadow: '0 0 4px 1px rgba(255,255,255,0.3)' }}
+        />
+      </div>
+      <div className="absolute top-[60%] left-[30%] animate-[shootingStar_15s_ease-out_infinite_8s]">
+        <div className="w-[60px] h-[1px] bg-gradient-to-r from-transparent via-accent-cyan/60 to-accent-cyan/60 rounded-full"
+          style={{ transform: 'rotate(45deg)', boxShadow: '0 0 4px 1px rgba(0,229,204,0.2)' }}
+        />
+      </div>
+
+      {/* Distant star clusters - subtle bright spots */}
+      <div className="absolute top-[25%] left-[70%] w-1 h-1 bg-white/60 rounded-full blur-[1px]" />
+      <div className="absolute top-[65%] left-[15%] w-1 h-1 bg-accent-cyan/40 rounded-full blur-[1px]" />
+      <div className="absolute top-[45%] right-[25%] w-1.5 h-1.5 bg-white/50 rounded-full blur-[1px]" />
+
+      {/* Very subtle cosmic dust */}
+      <div
+        className="absolute inset-0 opacity-[0.015]"
+        style={{
+          backgroundImage: 'radial-gradient(ellipse at 20% 30%, rgba(139,92,246,0.3) 0%, transparent 50%), radial-gradient(ellipse at 80% 70%, rgba(0,229,204,0.2) 0%, transparent 40%)',
+        }}
+      />
+    </div>
+  );
+};
+
+const terminalLines = [
+  { prompt: "~/projects", command: "git status", color: "text-accent-coral" },
+  {
+    prompt: "~/projects",
+    command: "git add . && git commit -m 'feat: add new feature'",
+    color: "text-accent-coral",
+  },
+  {
+    prompt: "db",
+    command: "SELECT * FROM users WHERE active = true;",
+    color: "text-accent-cyan",
+  },
+  {
+    prompt: "mongodb",
+    command: "db.users.find({ status: 'active' }).limit(10)",
+    color: "text-green",
+  },
+  {
+    prompt: "redis",
+    command: "SET session:user123 '{\"logged_in\": true}' EX 3600",
+    color: "text-red",
+  },
+  {
+    prompt: "docker",
+    command: "docker compose up -d --build",
+    color: "text-blue",
+  },
+];
+
+const TerminalWindow = () => {
+  const [currentLine, setCurrentLine] = useState(0);
+  const [displayedText, setDisplayedText] = useState("");
+  const [isTyping, setIsTyping] = useState(true);
+
+  useEffect(() => {
+    const line = terminalLines[currentLine];
+    let charIndex = 0;
+
+    const typeChar = () => {
+      if (charIndex <= line.command.length) {
+        setDisplayedText(line.command.slice(0, charIndex));
+        charIndex++;
+      } else {
+        setIsTyping(false);
+        setTimeout(() => {
+          setIsTyping(true);
+          setDisplayedText("");
+          setCurrentLine((prev) => (prev + 1) % terminalLines.length);
+        }, 2000);
+        return;
+      }
+    };
+
+    const interval = setInterval(typeChar, 50);
+    return () => clearInterval(interval);
+  }, [currentLine]);
+
+  const line = terminalLines[currentLine];
+
+  return (
+    <div className="w-full max-w-2xl mx-auto mb-12">
+      <div className="rounded-xl overflow-hidden border border-border-default shadow-2xl">
+        {/* Terminal Header */}
+        <div className="bg-bg-tertiary px-4 py-3 flex items-center gap-2 border-b border-border-default">
+          <div className="flex gap-2">
+            <div className="w-3 h-3 rounded-full bg-red/80" />
+            <div className="w-3 h-3 rounded-full bg-yellow/80" />
+            <div className="w-3 h-3 rounded-full bg-green/80" />
+          </div>
+          <span className="text-text-muted text-xs ml-2 font-mono">
+            toolnotes ~ terminal
+          </span>
+        </div>
+
+        {/* Terminal Body */}
+        <div className="bg-bg-primary/95 p-5 font-mono text-sm min-h-[120px]">
+          {/* Previous lines (faded) */}
+          <div className="text-text-muted/50 mb-2 text-xs">
+            <span className="text-green/50">$</span> Welcome to Tool Notes -
+            Your Developer Cheat Sheets
+          </div>
+
+          {/* Current line */}
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className={`${line.color} opacity-80`}>{line.prompt}</span>
+            <span className="text-accent-cyan">$</span>
+            <span className="text-text-primary">{displayedText}</span>
+            <span
+              className={`inline-block w-2 h-5 bg-accent-cyan ${
+                isTyping ? "animate-pulse" : ""
+              }`}
+            />
+          </div>
+
+          {/* Output preview */}
+          <div className="mt-3 text-text-muted/60 text-xs">
+            <span className="text-text-secondary/40">
+              // Press Enter to explore {terminalLines[currentLine].prompt}{" "}
+              commands
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Hero = () => {
   const cheatSheets = [
@@ -100,21 +292,8 @@ const Hero = () => {
     <div className="min-h-screen bg-bg-primary">
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        {/* Background Effects */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-accent-coral/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent-cyan/10 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gradient-radial from-bg-secondary/50 to-transparent rounded-full" />
-        </div>
-
-        {/* Grid Pattern */}
-        <div
-          className="absolute inset-0 opacity-[0.02]"
-          style={{
-            backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
-            backgroundSize: "64px 64px",
-          }}
-        />
+        {/* Space Background */}
+        <SpaceBackground />
 
         <div className="relative max-w-6xl mx-auto px-4 md:px-6 lg:px-8 py-24 md:py-32">
           {/* Badge */}
@@ -137,11 +316,14 @@ const Hero = () => {
           </h1>
 
           {/* Subtitle */}
-          <p className="text-lg md:text-xl text-text-secondary text-center max-w-2xl mx-auto mb-16">
+          <p className="text-lg md:text-xl text-text-secondary text-center max-w-2xl mx-auto mb-12">
             Quick reference guides for Git, SQL, MongoDB, Redis & Docker. Copy
             commands with a click, print for offline use, and master your tools
             faster.
           </p>
+
+          {/* Terminal Window */}
+          <TerminalWindow />
 
           {/* Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 max-w-7xl mx-auto">

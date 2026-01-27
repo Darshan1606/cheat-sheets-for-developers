@@ -90,6 +90,36 @@ code {
   color: var(--color-text-primary);
 }
 
+/* Space animations */
+@keyframes starTwinkle {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scale(0.8);
+  }
+}
+
+@keyframes shootingStar {
+  0% {
+    transform: translateX(0) translateY(0);
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  15% {
+    transform: translateX(300px) translateY(200px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(300px) translateY(200px);
+    opacity: 0;
+  }
+}
+
 /* Print styles */
 @media print {
   @page {
