@@ -1,14 +1,8 @@
-import { useState } from "react";
 import { Icon } from "./Icon";
+import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
 
 const LLMToolsCheatSheet = () => {
-  const [copiedCmd, setCopiedCmd] = useState(null);
-
-  const copyToClipboard = (text) => {
-    navigator.clipboard.writeText(text);
-    setCopiedCmd(text);
-    setTimeout(() => setCopiedCmd(null), 2000);
-  };
+  const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("llmtools", "AI & ML");
 
   const sections = [
     {

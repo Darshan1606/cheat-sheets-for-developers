@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
 import { useState, useEffect, useMemo } from "react";
+import { useAnalytics } from "../hooks/useAnalytics";
 
 // Generate stars with varying properties
 const generateStars = (count) => {
@@ -173,9 +174,10 @@ const TerminalWindow = () => {
 };
 
 // Cheat sheet card component
-const CheatSheetCard = ({ sheet, colorStyles }) => (
+const CheatSheetCard = ({ sheet, colorStyles, onSheetClick }) => (
   <Link
     to={sheet.path}
+    onClick={() => onSheetClick?.(sheet)}
     className={`group relative bg-bg-secondary/50 backdrop-blur-sm rounded-xl md:rounded-2xl border ${colorStyles[sheet.color].border} p-4 md:p-5 transition-all duration-300 hover:translate-y-[-4px] hover:shadow-2xl`}
   >
     <div
@@ -216,6 +218,12 @@ const CheatSheetCard = ({ sheet, colorStyles }) => (
 
 const Hero = () => {
   const [activeCategory, setActiveCategory] = useState("all");
+  const { trackCategoryFilter, trackSheetClick } = useAnalytics();
+
+  const handleCategoryChange = (categoryId) => {
+    setActiveCategory(categoryId);
+    trackCategoryFilter(categoryId);
+  };
 
   // Categories with their cheat sheets
   const categories = [
@@ -484,7 +492,7 @@ const Hero = () => {
           <div className="flex justify-center mb-6 md:mb-8">
             <div className="inline-flex flex-wrap justify-center gap-2 p-1.5 bg-bg-secondary/50 backdrop-blur-sm rounded-xl border border-border-default">
               <button
-                onClick={() => setActiveCategory("all")}
+                onClick={() => handleCategoryChange("all")}
                 className={`cursor-pointer flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 ${
                   activeCategory === "all"
                     ? "bg-bg-tertiary text-accent-cyan border border-accent-cyan/30"
@@ -500,7 +508,7 @@ const Hero = () => {
               {categories.map((cat) => (
                 <button
                   key={cat.id}
-                  onClick={() => setActiveCategory(cat.id)}
+                  onClick={() => handleCategoryChange(cat.id)}
                   className={`cursor-pointer flex items-center gap-1.5 md:gap-2 px-3 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 ${
                     activeCategory === cat.id
                       ? `bg-bg-tertiary ${categoryTabColors[cat.id]} border border-current/30`
@@ -525,6 +533,7 @@ const Hero = () => {
                 key={sheet.path}
                 sheet={sheet}
                 colorStyles={colorStyles}
+                onSheetClick={trackSheetClick}
               />
             ))}
           </div>
@@ -533,7 +542,7 @@ const Hero = () => {
           {activeCategory !== "all" && (
             <div className="mt-6 text-center">
               <button
-                onClick={() => setActiveCategory("all")}
+                onClick={() => handleCategoryChange("all")}
                 className="inline-flex items-center gap-2 text-sm text-text-secondary hover:text-accent-cyan transition-colors"
               >
                 <Icon name="layers" className="w-4 h-4" />

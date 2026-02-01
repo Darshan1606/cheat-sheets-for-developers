@@ -1,14 +1,8 @@
-import { useState } from "react";
 import { Icon } from "./Icon";
+import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
 
 const SQLCheatSheet = () => {
-  const [copiedCmd, setCopiedCmd] = useState(null);
-
-  const copyToClipboard = (cmd) => {
-    navigator.clipboard.writeText(cmd);
-    setCopiedCmd(cmd);
-    setTimeout(() => setCopiedCmd(null), 2000);
-  };
+  const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("sql", "Databases");
 
   const sections = [
     {

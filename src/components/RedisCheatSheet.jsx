@@ -1,14 +1,8 @@
-import { useState } from "react";
 import { Icon } from "./Icon";
+import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
 
 const RedisCheatSheet = () => {
-  const [copiedCmd, setCopiedCmd] = useState(null);
-
-  const copyToClipboard = (cmd) => {
-    navigator.clipboard.writeText(cmd);
-    setCopiedCmd(cmd);
-    setTimeout(() => setCopiedCmd(null), 2000);
-  };
+  const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("redis", "Databases");
 
   const sections = [
     {

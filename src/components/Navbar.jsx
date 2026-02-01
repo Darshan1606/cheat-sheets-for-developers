@@ -1,12 +1,29 @@
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "./Icon";
 import { useState, useRef, useEffect } from "react";
+import { useAnalytics } from "../hooks/useAnalytics";
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const dropdownRef = useRef(null);
+  const { trackMobileMenu, trackNavDropdown } = useAnalytics();
+
+  const handleMobileMenuToggle = () => {
+    const newState = !mobileMenuOpen;
+    setMobileMenuOpen(newState);
+    trackMobileMenu(newState ? "opened" : "closed");
+  };
+
+  const handleDropdownToggle = (categoryName, isMobile = false) => {
+    const isOpening = activeDropdown !== categoryName;
+    setActiveDropdown(isOpening ? categoryName : null);
+    trackNavDropdown(categoryName, isOpening ? "opened" : "closed");
+    if (isMobile && isOpening) {
+      trackMobileMenu("category_expanded");
+    }
+  };
 
   // Organized by categories
   const categories = [
@@ -124,11 +141,7 @@ const Navbar = () => {
               <div key={category.name} className="relative">
                 <button
                   type="button"
-                  onClick={() =>
-                    setActiveDropdown(
-                      activeDropdown === category.name ? null : category.name,
-                    )
-                  }
+                  onClick={() => handleDropdownToggle(category.name, false)}
                   className={`cursor-pointer flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
                     isCategoryActive(category)
                       ? `${categoryColorClasses[category.color]} bg-bg-secondary`
@@ -172,14 +185,14 @@ const Navbar = () => {
           </div>
 
           {/* Mobile Menu Button */}
-          {/* <button
+          <button
             type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={handleMobileMenuToggle}
             className="lg:hidden p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-bg-secondary transition-colors cursor-pointer"
             aria-label="Toggle menu"
           >
             <Icon name={mobileMenuOpen ? "x" : "menu"} className="w-6 h-6" />
-          </button> */}
+          </button>
         </div>
       </div>
 
@@ -205,11 +218,7 @@ const Navbar = () => {
                 >
                   <button
                     type="button"
-                    onClick={() =>
-                      setActiveDropdown(
-                        activeDropdown === category.name ? null : category.name,
-                      )
-                    }
+                    onClick={() => handleDropdownToggle(category.name, true)}
                     className={`cursor-pointer w-full flex items-center justify-between px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${
                       isCategoryActive(category)
                         ? `${categoryColorClasses[category.color]} bg-bg-secondary`
