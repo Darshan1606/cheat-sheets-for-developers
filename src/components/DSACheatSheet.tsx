@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const DSACheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("dsa", "CS Fundamentals");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "Arrays",
       icon: "list",
@@ -286,7 +309,7 @@ const DSACheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "O(1)", desc: "Constant" },
     { term: "O(log n)", desc: "Logarithmic" },
     { term: "O(n)", desc: "Linear" },
@@ -297,7 +320,7 @@ const DSACheatSheet = () => {
     { term: "DFS", desc: "Depth-First" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

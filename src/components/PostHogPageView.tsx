@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { posthog } from "../lib/posthog";
+import { posthog } from "@utils/posthog";
 
 /**
  * Component that tracks page views for SPA navigation

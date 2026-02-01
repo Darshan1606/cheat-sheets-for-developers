@@ -3,15 +3,18 @@ import { useAnalytics } from "./useAnalytics";
 
 /**
  * Custom hook that combines clipboard copy with analytics tracking
- * @param {string} sheetName - Name of the cheat sheet (e.g., "git", "docker")
- * @param {string} category - Category of the sheet (e.g., "DevOps", "Databases")
+ * @param sheetName - Name of the cheat sheet (e.g., "git", "docker")
+ * @param category - Category of the sheet (e.g., "DevOps", "Databases")
  */
-export const useCopyWithAnalytics = (sheetName, category = "") => {
-  const [copiedCmd, setCopiedCmd] = useState(null);
+export const useCopyWithAnalytics = (
+  sheetName: string,
+  category: string = ""
+) => {
+  const [copiedCmd, setCopiedCmd] = useState<string | null>(null);
   const { trackCommandCopy } = useAnalytics();
 
   const copyToClipboard = useCallback(
-    (cmd, sectionTitle = "") => {
+    (cmd: string, sectionTitle: string = "") => {
       navigator.clipboard.writeText(cmd);
       setCopiedCmd(cmd);
       setTimeout(() => setCopiedCmd(null), 2000);

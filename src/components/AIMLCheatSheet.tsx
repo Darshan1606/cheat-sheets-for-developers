@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const AIMLCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("aiml", "AI & ML");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "NumPy Basics",
       icon: "list",
@@ -317,7 +340,7 @@ const AIMLCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "X", desc: "Features/Input" },
     { term: "y", desc: "Labels/Target" },
     { term: "epoch", desc: "Full data pass" },
@@ -328,7 +351,7 @@ const AIMLCheatSheet = () => {
     { term: "CV", desc: "Cross-validation" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const AWSCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("aws", "DevOps");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "AWS CLI Basics",
       icon: "terminal",
@@ -273,7 +296,7 @@ const AWSCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "Region", desc: "Geographic location" },
     { term: "AZ", desc: "Availability Zone" },
     { term: "ARN", desc: "Amazon Resource Name" },
@@ -284,7 +307,7 @@ const AWSCheatSheet = () => {
     { term: "RDS", desc: "Relational Database" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

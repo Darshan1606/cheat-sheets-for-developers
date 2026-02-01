@@ -1,11 +1,55 @@
 import { Link } from "react-router-dom";
 import { Icon } from "./Icon";
 import { useState, useEffect, useMemo } from "react";
-import { useAnalytics } from "../hooks/useAnalytics";
+import { useAnalytics } from "@hooks/useAnalytics";
+
+// Types
+interface Star {
+  id: number;
+  left: number;
+  top: number;
+  size: number;
+  opacity: number;
+  twinkle: boolean;
+  delay: number;
+}
+
+interface Sheet {
+  title: string;
+  description: string;
+  icon: string;
+  path: string;
+  color: string;
+  commands: string;
+  categories: string;
+}
+
+interface Category {
+  id: string;
+  name: string;
+  icon: string;
+  color: string;
+  sheets: Sheet[];
+}
+
+interface ColorStyle {
+  gradient: string;
+  border: string;
+  icon: string;
+  iconBg: string;
+  glow: string;
+  badge: string;
+}
+
+interface CheatSheetCardProps {
+  sheet: Sheet;
+  colorStyles: Record<string, ColorStyle>;
+  onSheetClick?: (sheet: Sheet) => void;
+}
 
 // Generate stars with varying properties
-const generateStars = (count) => {
-  const stars = [];
+const generateStars = (count: number): Star[] => {
+  const stars: Star[] = [];
   for (let i = 0; i < count; i++) {
     const size = Math.random();
     stars.push({
@@ -174,7 +218,11 @@ const TerminalWindow = () => {
 };
 
 // Cheat sheet card component
-const CheatSheetCard = ({ sheet, colorStyles, onSheetClick }) => (
+const CheatSheetCard = ({
+  sheet,
+  colorStyles,
+  onSheetClick,
+}: CheatSheetCardProps) => (
   <Link
     to={sheet.path}
     onClick={() => onSheetClick?.(sheet)}
@@ -220,13 +268,13 @@ const Hero = () => {
   const [activeCategory, setActiveCategory] = useState("all");
   const { trackCategoryFilter, trackSheetClick } = useAnalytics();
 
-  const handleCategoryChange = (categoryId) => {
+  const handleCategoryChange = (categoryId: string) => {
     setActiveCategory(categoryId);
     trackCategoryFilter(categoryId);
   };
 
   // Categories with their cheat sheets
-  const categories = [
+  const categories: Category[] = [
     {
       id: "devops",
       name: "DevOps",
@@ -376,7 +424,7 @@ const Hero = () => {
       ? allSheets
       : categories.find((c) => c.id === activeCategory)?.sheets || [];
 
-  const colorStyles = {
+  const colorStyles: Record<string, ColorStyle> = {
     coral: {
       gradient: "from-accent-coral/20 to-accent-coral/5",
       border: "border-accent-coral/20 hover:border-accent-coral/40",
@@ -443,7 +491,7 @@ const Hero = () => {
     },
   };
 
-  const categoryTabColors = {
+  const categoryTabColors: Record<string, string> = {
     all: "text-accent-cyan",
     devops: "text-blue",
     databases: "text-green",

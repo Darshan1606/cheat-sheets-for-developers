@@ -1,10 +1,27 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
 
 const LLMToolsCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("llmtools", "AI & ML");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "LangChain Core",
       icon: "link",
@@ -247,7 +264,7 @@ const LLMToolsCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "LangChain", desc: "Chains & agents" },
     { term: "LlamaIndex", desc: "Data indexing" },
     { term: "RAG", desc: "Retrieval + Gen" },
@@ -258,7 +275,7 @@ const LLMToolsCheatSheet = () => {
     { term: "Guardrails", desc: "Safety filters" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     purple: "border-purple/30 bg-purple/5",
     blue: "border-blue/30 bg-blue/5",
     green: "border-green/30 bg-green/5",
@@ -269,7 +286,7 @@ const LLMToolsCheatSheet = () => {
     gray: "border-gray/30 bg-gray/5",
   };
 
-  const iconColorClasses = {
+  const iconColorClasses: Record<string, string> = {
     purple: "text-purple",
     blue: "text-blue",
     green: "text-green",

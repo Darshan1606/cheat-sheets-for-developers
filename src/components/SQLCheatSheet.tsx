@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const SQLCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("sql", "Databases");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "Database Operations",
       icon: "database",
@@ -212,7 +235,7 @@ const SQLCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "%", desc: "Wildcard (any characters)" },
     { term: "_", desc: "Single character wildcard" },
     { term: "NULL", desc: "Unknown/missing value" },
@@ -221,7 +244,7 @@ const SQLCheatSheet = () => {
     { term: "DISTINCT", desc: "Unique values only" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

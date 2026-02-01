@@ -69,9 +69,10 @@ import {
   XCircle,
   Menu,
   X,
+  LucideIcon,
 } from "lucide-react";
 
-const iconMap = {
+const iconMap: Record<string, LucideIcon> = {
   settings: Settings,
   "folder-plus": FolderPlus,
   camera: Camera,
@@ -144,7 +145,12 @@ const iconMap = {
   x: X,
 };
 
-export const Icon = ({ name, className = "" }) => {
+interface IconProps {
+  name: string;
+  className?: string;
+}
+
+export const Icon = ({ name, className = "" }: IconProps) => {
   const IconComponent = iconMap[name];
 
   if (!IconComponent) {

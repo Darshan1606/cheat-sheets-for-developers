@@ -3,7 +3,7 @@ import posthog from "posthog-js";
 const POSTHOG_KEY = import.meta.env.VITE_POSTHOG_KEY;
 const POSTHOG_HOST = import.meta.env.VITE_POSTHOG_HOST;
 
-export const initPostHog = () => {
+export const initPostHog = (): void => {
   if (!POSTHOG_KEY) {
     console.warn("PostHog key not found. Analytics disabled.");
     return;

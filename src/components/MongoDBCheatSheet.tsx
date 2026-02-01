@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const MongoDBCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("mongodb", "Databases");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "Database Operations",
       icon: "database",
@@ -195,7 +218,7 @@ const MongoDBCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "_id", desc: "Unique document identifier" },
     { term: "$set", desc: "Set field value" },
     { term: "$gt/$lt", desc: "Greater/Less than" },
@@ -204,7 +227,7 @@ const MongoDBCheatSheet = () => {
     { term: "$push", desc: "Add to array" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const RedisCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("redis", "Databases");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "Connection",
       icon: "link",
@@ -196,7 +219,7 @@ const RedisCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "KEYS *", desc: "All keys (use SCAN in prod)" },
     { term: "NX", desc: "Only if not exists" },
     { term: "XX", desc: "Only if exists" },
@@ -205,7 +228,7 @@ const RedisCheatSheet = () => {
     { term: "-1", desc: "No expiration set" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

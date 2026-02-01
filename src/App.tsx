@@ -1,17 +1,17 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import GitCheatSheet from "./components/GitCheatSheet";
-import SQLCheatSheet from "./components/SQLCheatSheet";
-import MongoDBCheatSheet from "./components/MongoDBCheatSheet";
-import RedisCheatSheet from "./components/RedisCheatSheet";
-import DockerCheatSheet from "./components/DockerCheatSheet";
-import AWSCheatSheet from "./components/AWSCheatSheet";
-import DSACheatSheet from "./components/DSACheatSheet";
-import LinuxCheatSheet from "./components/LinuxCheatSheet";
-import AIMLCheatSheet from "./components/AIMLCheatSheet";
-import PromptCheatSheet from "./components/PromptCheatSheet";
-import LLMToolsCheatSheet from "./components/LLMToolsCheatSheet";
+import Navbar from "@components/Navbar";
+import Hero from "@components/Hero";
+import GitCheatSheet from "@components/GitCheatSheet";
+import SQLCheatSheet from "@components/SQLCheatSheet";
+import MongoDBCheatSheet from "@components/MongoDBCheatSheet";
+import RedisCheatSheet from "@components/RedisCheatSheet";
+import DockerCheatSheet from "@components/DockerCheatSheet";
+import AWSCheatSheet from "@components/AWSCheatSheet";
+import DSACheatSheet from "@components/DSACheatSheet";
+import LinuxCheatSheet from "@components/LinuxCheatSheet";
+import AIMLCheatSheet from "@components/AIMLCheatSheet";
+import PromptCheatSheet from "@components/PromptCheatSheet";
+import LLMToolsCheatSheet from "@components/LLMToolsCheatSheet";
 
 function App() {
   return (

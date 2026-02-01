@@ -1,10 +1,33 @@
 import { Icon } from "./Icon";
-import { useCopyWithAnalytics } from "../hooks/useCopyWithAnalytics";
+import { useCopyWithAnalytics } from "@hooks/useCopyWithAnalytics";
+
+interface Command {
+  cmd: string;
+  desc: string;
+}
+
+interface Section {
+  title: string;
+  icon: string;
+  color: string;
+  commands: Command[];
+}
+
+interface QuickRefItem {
+  term: string;
+  desc: string;
+}
+
+interface ColorClass {
+  badge: string;
+  header: string;
+  border: string;
+}
 
 const GitCheatSheet = () => {
   const { copiedCmd, copyToClipboard } = useCopyWithAnalytics("git", "DevOps");
 
-  const sections = [
+  const sections: Section[] = [
     {
       title: "Setup",
       icon: "settings",
@@ -197,7 +220,7 @@ const GitCheatSheet = () => {
     },
   ];
 
-  const quickRef = [
+  const quickRef: QuickRefItem[] = [
     { term: "HEAD", desc: "Current branch/commit pointer" },
     { term: "HEAD~1", desc: "One commit before HEAD" },
     { term: "HEAD^", desc: "Parent of HEAD" },
@@ -208,7 +231,7 @@ const GitCheatSheet = () => {
     { term: "HEAD@{n}", desc: "nth prior HEAD position" },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, ColorClass> = {
     purple: {
       badge: "bg-purple-subtle text-purple",
       header: "text-purple",

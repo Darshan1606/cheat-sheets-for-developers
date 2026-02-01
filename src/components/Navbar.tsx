@@ -1,13 +1,28 @@
 import { Link, useLocation } from "react-router-dom";
 import { Icon } from "./Icon";
 import { useState, useRef, useEffect } from "react";
-import { useAnalytics } from "../hooks/useAnalytics";
+import { useAnalytics } from "@hooks/useAnalytics";
+
+// Types
+interface NavItem {
+  path: string;
+  label: string;
+  icon: string;
+  color: string;
+}
+
+interface Category {
+  name: string;
+  icon: string;
+  color: string;
+  items: NavItem[];
+}
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const dropdownRef = useRef(null);
+  const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const { trackMobileMenu, trackNavDropdown } = useAnalytics();
 
   const handleMobileMenuToggle = () => {
@@ -16,7 +31,7 @@ const Navbar = () => {
     trackMobileMenu(newState ? "opened" : "closed");
   };
 
-  const handleDropdownToggle = (categoryName, isMobile = false) => {
+  const handleDropdownToggle = (categoryName: string, isMobile = false) => {
     const isOpening = activeDropdown !== categoryName;
     setActiveDropdown(isOpening ? categoryName : null);
     trackNavDropdown(categoryName, isOpening ? "opened" : "closed");
@@ -26,7 +41,7 @@ const Navbar = () => {
   };
 
   // Organized by categories
-  const categories = [
+  const categories: Category[] = [
     {
       name: "DevOps",
       icon: "server",
@@ -76,7 +91,7 @@ const Navbar = () => {
     },
   ];
 
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     coral: "text-accent-coral bg-accent-coral/10 border-accent-coral/30",
     cyan: "text-accent-cyan bg-accent-cyan/10 border-accent-cyan/30",
     green: "text-green bg-green/10 border-green/30",
@@ -87,14 +102,14 @@ const Navbar = () => {
     yellow: "text-yellow bg-yellow/10 border-yellow/30",
   };
 
-  const categoryColorClasses = {
+  const categoryColorClasses: Record<string, string> = {
     blue: "text-blue",
     green: "text-green",
     yellow: "text-yellow",
     purple: "text-purple",
   };
 
-  const isCategoryActive = (category) => {
+  const isCategoryActive = (category: Category) => {
     return category.items.some((item) => location.pathname === item.path);
   };
 
@@ -105,8 +120,11 @@ const Navbar = () => {
 
   // Close dropdown when clicking outside (desktop only)
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
         setActiveDropdown(null);
       }
     };
