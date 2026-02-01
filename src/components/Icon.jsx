@@ -65,6 +65,10 @@ import {
   SortAsc,
   BarChart3,
   Infinity,
+  Blocks,
+  XCircle,
+  Menu,
+  X,
 } from "lucide-react";
 
 const iconMap = {
@@ -134,6 +138,10 @@ const iconMap = {
   "sort-asc": SortAsc,
   "bar-chart": BarChart3,
   infinity: Infinity,
+  blocks: Blocks,
+  "x-circle": XCircle,
+  menu: Menu,
+  x: X,
 };
 
 export const Icon = ({ name, className = "" }) => {

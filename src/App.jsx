@@ -6,6 +6,12 @@ import SQLCheatSheet from "./components/SQLCheatSheet";
 import MongoDBCheatSheet from "./components/MongoDBCheatSheet";
 import RedisCheatSheet from "./components/RedisCheatSheet";
 import DockerCheatSheet from "./components/DockerCheatSheet";
+import AWSCheatSheet from "./components/AWSCheatSheet";
+import DSACheatSheet from "./components/DSACheatSheet";
+import LinuxCheatSheet from "./components/LinuxCheatSheet";
+import AIMLCheatSheet from "./components/AIMLCheatSheet";
+import PromptCheatSheet from "./components/PromptCheatSheet";
+import LLMToolsCheatSheet from "./components/LLMToolsCheatSheet";
 
 function App() {
   return (
@@ -18,6 +24,12 @@ function App() {
         <Route path="/mongodb" element={<MongoDBCheatSheet />} />
         <Route path="/redis" element={<RedisCheatSheet />} />
         <Route path="/docker" element={<DockerCheatSheet />} />
+        <Route path="/aws" element={<AWSCheatSheet />} />
+        <Route path="/dsa" element={<DSACheatSheet />} />
+        <Route path="/linux" element={<LinuxCheatSheet />} />
+        <Route path="/aiml" element={<AIMLCheatSheet />} />
+        <Route path="/prompt" element={<PromptCheatSheet />} />
+        <Route path="/llmtools" element={<LLMToolsCheatSheet />} />
       </Routes>
     </>
   );
